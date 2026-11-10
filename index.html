@@ -189,6 +189,58 @@
     margin-top: 6px;
   }
 
+  /* Boutons « Gagner de l'argent » : contour rouge animé, icône, flèche */
+  @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes spin { to { --angle: 360deg; } }
+
+  a.btn.earn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(rgba(14, 14, 14, 0.92), rgba(14, 14, 14, 0.92)) padding-box,
+      conic-gradient(from var(--angle), rgba(229, 9, 20, 0.15) 0deg, var(--red) 60deg, rgba(229, 9, 20, 0.15) 120deg, rgba(229, 9, 20, 0.15) 360deg) border-box;
+    animation: fadeInUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards, spin 5s linear infinite;
+  }
+  a.btn.earn[href*="reseller"] { animation-delay: 0.7s, -2.5s; }
+  a.btn.earn[href*="affiliate"] { animation-delay: 0.6s, 0s; }
+
+  a.btn.earn:hover {
+    border-color: transparent;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5), 0 0 22px rgba(229, 9, 20, 0.25);
+  }
+
+  .earn-icon {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(229, 9, 20, 0.25), rgba(229, 9, 20, 0.05));
+    border: 1px solid rgba(229, 9, 20, 0.35);
+    color: #ff4d55;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .earn-icon svg { width: 22px; height: 22px; }
+  a.btn.earn:hover .earn-icon {
+    transform: rotate(-6deg) scale(1.08);
+    background: linear-gradient(135deg, var(--red), #99060d);
+    color: #fff;
+  }
+
+  .earn-text { flex: 1; min-width: 0; }
+
+  .earn-arrow {
+    flex: none;
+    color: var(--muted);
+    font-size: 20px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  a.btn.earn:hover .earn-arrow { transform: translateX(4px); color: var(--red); }
+
   /* Typographie secondaire */
   .label {
     color: var(--fg);
@@ -211,7 +263,8 @@
 
   /* Visiteurs qui ont réduit les animations sur leur téléphone */
   @media (prefers-reduced-motion: reduce) {
-    main > *, a.btn.main::after { animation: none; }
+    main > *, a.btn.main::after, a.btn.earn { animation: none; }
+    a.btn.earn .earn-icon, a.btn.earn .earn-arrow { transition: none; }
     a.btn, .avatar { transition: none; }
     a.btn:hover, a.btn.main:hover, .avatar:hover { transform: none; }
   }
@@ -246,13 +299,21 @@
   </section>
 
   <p class="label" data-fr="Gagner de l'argent avec POWTV" data-en="Earn money with POWTV">Gagner de l'argent avec POWTV</p>
-  <a class="btn" href="https://powtv.app/affiliate-program?utm_source=instagram&utm_medium=bio">
-    <span data-fr="Programme partenaires" data-en="Affiliate program">Programme partenaires</span>
-    <small data-fr="30 % sur chaque licence vendue grâce à ton lien" data-en="30% on every licence sold through your link">30 % sur chaque licence vendue grâce à ton lien</small>
+  <a class="btn earn" href="https://powtv.app/affiliate-program?utm_source=instagram&utm_medium=bio">
+    <span class="earn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></span>
+    <span class="earn-text">
+      <span data-fr="Programme partenaires" data-en="Affiliate program">Programme partenaires</span>
+      <small data-fr="30 % sur chaque licence vendue grâce à ton lien" data-en="30% on every licence sold through your link">30 % sur chaque licence vendue grâce à ton lien</small>
+    </span>
+    <span class="earn-arrow" aria-hidden="true">→</span>
   </a>
-  <a class="btn" href="https://powtv.app/become-reseller?utm_source=instagram&utm_medium=bio">
-    <span data-fr="Devenir revendeur" data-en="Become a reseller">Devenir revendeur</span>
-    <small data-fr="Achète des licences en gros et revends-les" data-en="Buy licences in bulk and resell them">Achète des licences en gros et revends-les</small>
+  <a class="btn earn" href="https://powtv.app/become-reseller?utm_source=instagram&utm_medium=bio">
+    <span class="earn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8"/><path d="M10 20v-5h4v5"/></svg></span>
+    <span class="earn-text">
+      <span data-fr="Devenir revendeur" data-en="Become a reseller">Devenir revendeur</span>
+      <small data-fr="Achète des licences en gros et revends-les" data-en="Buy licences in bulk and resell them">Achète des licences en gros et revends-les</small>
+    </span>
+    <span class="earn-arrow" aria-hidden="true">→</span>
   </a>
 
   <footer data-fr="POWTV est un lecteur : aucune chaîne ni contenu fourni." data-en="POWTV is a player: no channels or content provided.">POWTV est un lecteur : aucune chaîne ni contenu fourni.</footer>
